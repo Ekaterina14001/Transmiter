@@ -89,56 +89,35 @@ private:
         }
     }
     double derivative_x(int i) {
-        switch (i) {//AB AC BC
-        case 1:
-            return (D.x-A.x) / sqrt(pow(D.x - A.x, 2) + pow(D.y - A.y, 2)) + (D.x-B.x) / sqrt(pow(D.x - B.x, 2) + pow(D.y - B.y, 2));
-        case 2:
-            return (D.x - A.x) / sqrt(pow(D.x - A.x, 2) + pow(D.y - A.y, 2)) + (D.x - C.x) / sqrt(pow(D.x - C.x, 2) + pow(D.y - C.y, 2));
-        case 3:
-            return (D.x-B.x) / sqrt(pow(D.x - B.x, 2) + pow(D.x - B.y, 2)) + (D.x - C.x) / sqrt(pow(D.x - C.x, 2) + pow(D.y - C.y, 2));
-        case 4:
-            return (E.x - A.x) / sqrt(pow(E.x - A.x, 2) + pow(E.y - A.y, 2)) + (E.x - B.x) / sqrt(pow(E.x - B.x, 2) + pow(E.y - B.y, 2));
-        case 5:
-            return (E.x - A.x) / sqrt(pow(E.x - A.x, 2) + pow(E.y - A.y, 2)) + (E.x - C.x) / sqrt(pow(E.x - C.x, 2) + pow(E.y - C.y, 2));
-        case 6:
-            return (E.x - B.x) / sqrt(pow(E.x - B.x, 2) + pow(E.x - B.y, 2)) + (E.x - C.x) / sqrt(pow(E.x - C.x, 2) + pow(E.y - C.y, 2));
-        case 7:
-            return (F.x - A.x) / sqrt(pow(F.x - A.x, 2) + pow(F.y - A.y, 2)) + (F.x - B.x) / sqrt(pow(F.x - B.x, 2) + pow(F.y - B.y, 2));
-        case 8:
-            return (F.x - A.x) / sqrt(pow(F.x - A.x, 2) + pow(F.y - A.y, 2)) + (F.x - C.x) / sqrt(pow(F.x - C.x, 2) + pow(F.y - C.y, 2));
-        case 9:
-            return (F.x - B.x) / sqrt(pow(F.x - B.x, 2) + pow(F.x - B.y, 2)) + (F.x - C.x) / sqrt(pow(F.x - C.x, 2) + pow(F.y - C.y, 2));
-        default:
-            return 0.0;
-        }
+    switch (i) {//AB AC BC
+    case 1:
+        return -(D.x-A.x) / sqrt(pow(D.x - A.x, 2) + pow(D.y - A.y, 2));
+    case 2:
+        return -(D.x-B.x) / sqrt(pow(D.x - B.x, 2) + pow(D.x - B.y, 2));
+    case 3:
+        return -(D.x - C.x) / sqrt(pow(D.x - C.x, 2) + pow(D.x - C.y, 2));
+  
+    default:
+        return 0.0;
+    }
+}
+
+double derivative_y(int i) {
+    switch (i)
+    {
+   
+    case 1:
+        return -(D.y - A.y) / sqrt(pow(D.x - A.x, 2) + pow(D.y - A.y, 2));
+    case 2:
+        return -(D.y - B.y) / sqrt(pow(D.x - B.x, 2) + pow(D.y - B.y, 2));
+    case 3:
+        return -(D.y - C.y) / sqrt(pow(D.x - C.x, 2) + pow(D.x - C.y, 2));
+    
+    default:
+        return 0.0;
     }
 
-    double derivative_y(int i) {
-        switch (i)
-        {
-       
-        case 1:
-            return (D.y - A.y) / sqrt(pow(D.x - A.x, 2) + pow(D.y - A.y, 2)) + (D.y - B.y) / sqrt(pow(D.x - B.x, 2) + pow(D.y - B.y, 2));
-        case 2:
-            return (D.y - A.y) / sqrt(pow(D.x - A.x, 2) + pow(D.y - A.y, 2)) + (D.y - C.y) / sqrt(pow(D.x - C.x, 2) + pow(D.y - C.y, 2));
-        case 3:
-            return (D.y - B.y) / sqrt(pow(D.x - B.x, 2) + pow(D.x - B.y, 2)) + (D.y - C.y) / sqrt(pow(D.x - C.x, 2) + pow(D.y - C.y, 2));
-        case 4:
-            return (E.y - A.y) / sqrt(pow(E.x - A.x, 2) + pow(E.y - A.y, 2)) + (E.y - B.y) / sqrt(pow(E.x - B.x, 2) + pow(E.y - B.y, 2));
-        case 5:
-            return (E.y - A.y) / sqrt(pow(E.x - A.x, 2) + pow(E.y - A.y, 2)) + (E.y - C.y) / sqrt(pow(E.x - C.x, 2) + pow(E.y - C.y, 2));
-        case 6:
-            return (E.y - B.y) / sqrt(pow(E.x - B.x, 2) + pow(E.x - B.y, 2)) + (E.y - C.y) / sqrt(pow(E.x - C.x, 2) + pow(E.y - C.y, 2));
-        case 7:
-            return (F.y - A.y) / sqrt(pow(F.x - A.x, 2) + pow(F.y - A.y, 2)) + (F.y - B.y) / sqrt(pow(F.x - B.x, 2) + pow(F.y - B.y, 2));
-        case 8:
-            return (F.y - A.y) / sqrt(pow(F.x - A.x, 2) + pow(F.y - A.y, 2)) + (F.y - C.y) / sqrt(pow(F.x - C.x, 2) + pow(F.y - C.y, 2));
-        case 9:
-            return (F.y - B.y) / sqrt(pow(F.x - B.x, 2) + pow(F.x - B.y, 2)) + (F.y - C.y) / sqrt(pow(F.x - C.x, 2) + pow(F.y - C.y, 2));
-        default:
-            return 0.0;
-    }
-    }
+}
     double goldenSectionSearch(int i, double grad) {
         double a = 0.0;
         double b = 1.0;
@@ -223,6 +202,13 @@ private:
             C.x << "," << C.y << "), (" << D.x << "," << D.y << "), (" << E.x << "," << E.y << "), ("
             << F.x << "," << F.y << ")" << std::endl;
     }
+void convergence()
+{//vec(AD)+vec(-BD)=vec(AB)
+    std::cout<<"Convergence of AB: "<<abs(D.AB-sqrt(pow(B.x-A.x,2)+(B.y-A.y,2)))<<std::endl<<
+        "Convergence of AC: "<<abs(D.AC-sqrt(pow(C.x-A.x,2)+(C.y-A.y,2)))<<std::endl<<
+        "Convergence of BC: "<<abs(D.BC-sqrt(pow(C.x-B.x,2)+(C.y-B.y,2)))<<std::endl;
+    
+}
     public:
 
     void compute()
@@ -234,6 +220,7 @@ private:
         steepestDescent(0.01, 10);
         std::cout << "After calculation" << std::endl;
         print();
+        convergence();
     }
     
 
