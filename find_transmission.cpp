@@ -202,7 +202,7 @@ double derivative_y(int i) {
             C.x << "," << C.y << "), (" << D.x << "," << D.y << "), (" << E.x << "," << E.y << "), ("
             << F.x << "," << F.y << ")" << std::endl;
     }
-void convergence()
+void print_convergence()
 {//vec(AD)+vec(-BD)=vec(AB)
     std::cout<<"Convergence of AB: "<<abs(D.AB-sqrt(pow(B.x-A.x,2)+(B.y-A.y,2)))<<std::endl<<
         "Convergence of AC: "<<abs(D.AC-sqrt(pow(C.x-A.x,2)+(C.y-A.y,2)))<<std::endl<<
@@ -220,7 +220,7 @@ void convergence()
         steepestDescent(0.01, 10);
         std::cout << "After calculation" << std::endl;
         print();
-        convergence();
+        print_convergence();
     }
     
 
