@@ -15,7 +15,7 @@ struct Point
     double BC;
 };
 
-class Transmission
+class TestPoints
 {
 private:
     Point D;
@@ -24,6 +24,78 @@ private:
     Point A;
     Point B;
     Point C;
+
+    
+public:
+    TestPoints()
+    {
+        int start = 10;
+        int end = 30;
+
+        D.x = rand() % (end - start + 1) + start;
+        D.y = rand() % (end - start + 1) + start;
+        E.x = rand() % (end - start + 1) + start;
+        E.y = rand() % (end - start + 1) + start;
+        F.x = rand() % (end - start + 1) + start;
+        F.y = rand() % (end - start + 1) + start;
+
+        A.x = rand() % (end - start + 1) + start;
+        A.y = rand() % (end - start + 1) + start;
+        B.x = rand() % (end - start + 1) + start;
+        B.y = rand() % (end - start + 1) + start;
+        C.x = rand() % (end - start + 1) + start;
+        C.y = rand() % (end - start + 1) + start;
+
+        D.AB = sqrt(pow(D.x - A.x, 2) + pow(D.y - A.y, 2)) + sqrt(pow(D.x - B.x, 2) + pow(D.y - B.y, 2));
+        D.AC = sqrt(pow(D.x - A.x, 2) + pow(D.y - A.y, 2)) + sqrt(pow(D.x - C.x, 2) + pow(D.y - C.y, 2));
+        D.BC = sqrt(pow(D.x - B.x, 2) + pow(D.y - B.y, 2)) + sqrt(pow(D.x - C.x, 2) + pow(D.y - C.y, 2));
+        E.AB = sqrt(pow(E.x - A.x, 2) + pow(E.y - A.y, 2)) + sqrt(pow(E.x - B.x, 2) + pow(E.y - B.y, 2));
+        E.AC = sqrt(pow(E.x - A.x, 2) + pow(E.y - A.y, 2)) + sqrt(pow(E.x - C.x, 2) + pow(E.y - C.y, 2));
+        E.BC = sqrt(pow(E.x - B.x, 2) + pow(E.y - B.y, 2)) + sqrt(pow(E.x - C.x, 2) + pow(E.y - C.y, 2));
+        F.AB = sqrt(pow(F.x - A.x, 2) + pow(F.y - A.y, 2)) + sqrt(pow(F.x - B.x, 2) + pow(F.y - B.y, 2));
+        F.AC = sqrt(pow(F.x - A.x, 2) + pow(F.y - A.y, 2)) + sqrt(pow(F.x - C.x, 2) + pow(F.y - C.y, 2));
+        F.BC = sqrt(pow(F.x - B.x, 2) + pow(F.y - B.y, 2)) + sqrt(pow(F.x - C.x, 2) + pow(F.y - C.y, 2));
+    }
+    Point get_A()
+    {
+        return A;
+    }
+    Point get_B()
+    {
+        return B;
+    }
+    Point get_C()
+    {
+        return C;
+    }
+    Point get_D()
+    {
+        return D;
+    }
+    Point get_E()
+    {
+        return E;
+    }
+    Point get_F()
+    {
+        return F;
+    }
+};
+
+class Transmission: public TestPoints
+{
+private:
+    Point D;
+    Point E;
+    Point F;
+    Point A;
+    Point B;
+    Point C;
+    Point standartA;
+    Point standartB;
+    Point standartC;
+
+    
 
     void set_D(double x, double y, double AB, double AC, double BC)
     {
@@ -49,16 +121,7 @@ private:
         F.AC = AC; //AF-CF
         F.BC = BC; //BF-CF
     }
-    void set_first()
-    {
-        A.x = D.x + D.AB;
-        A.y = D.y + D.AB;
-        B.x = E.x + E.AB;
-        B.y = E.y + E.AB;
-        C.x = F.x + F.AC;
-        C.y = F.y + F.AC;
-     }
-
+  
     //general equation is sqrt(pow(x-x0,2)+pow(y-y0,2))-sqrt(pow(x-x1,2)+pow(y-y1,2))-v(t0-t1)=0
     // D, F and E - (x,y), A, B, C - (x0,y0) or (x1, y1), so vt0 is distance (x,y) to (x0,y0), vt1 is distance (x,y) to (x1,y1)
     //system of 9 equations
@@ -159,8 +222,8 @@ double derivative_y(int i) {
 
         return (a + b) / 2;  // Возвращаем значение в середине интервала
     }
-    void steepestDescent(double precision, int mIterations) {
-        set_first();
+    void steepestDescent(int mIterations) {
+        //set_first();
         int iteration = 0;
         while (iteration < mIterations) {
             // Вычисляем градиенты функций для переменных A.x, A.y, B.x, B.y, C.x, C.y
@@ -201,26 +264,43 @@ double derivative_y(int i) {
         std::cout << "A, B, C, D, E, F: (" << A.x << "," << A.y << "), (" << B.x << "," << B.y << "), (" <<
             C.x << "," << C.y << "), (" << D.x << "," << D.y << "), (" << E.x << "," << E.y << "), ("
             << F.x << "," << F.y << ")" << std::endl;
+
+        std::cout << "standartA, standartB, standartC: (" << standartA.x << "," << standartA.y << "), (" << standartB.x <<
+            "," << standartB.y << "), (" << standartC.x << "," << standartC.y << ")"<< std::endl;
     }
-void print_methodError()
-{//vec(AD)+vec(-BD)=vec(AB)
-    std::cout<<"Convergence of AB: "<<abs(D.AB-sqrt(pow(B.x-A.x,2)+(B.y-A.y,2)))<<std::endl<<
-        "Convergence of AC: "<<abs(D.AC-sqrt(pow(C.x-A.x,2)+(C.y-A.y,2)))<<std::endl<<
-        "Convergence of BC: "<<abs(D.BC-sqrt(pow(C.x-B.x,2)+(C.y-B.y,2)))<<std::endl;
-    
-}
+
+    void print_differences()
+    {
+        std::cout << "Diferences: ||A-standartA||=" << sqrt(pow(A.x - standartA.x, 2) + pow(A.y - standartA.y, 2)) << ", ||B-standartB||="
+            << sqrt(pow(B.x - standartB.x, 2) + pow(B.y - standartB.y, 2)) << ", ||C-standartC||="
+            << sqrt(pow(C.x - standartC.x, 2) + pow(C.y - standartC.y, 2)) << std::endl;
+    }
+   
     public:
+        Transmission(TestPoints& t)
+        {
+            D = t.get_D();
+            E = t.get_E();
+            F = t.get_F();
+            standartA = t.get_A();
+            standartB = t.get_B();
+            standartC = t.get_C();
+            A.x = 0;
+            A.y = 0;
+            B.x = 0;
+            B.y = 0;
+            C.x = 0;
+            C.y = 0;
+        }
 
     void compute()
     {
-        set_D(10, 10, 2, 3, 1);
-        set_E(12, 13, 2, 1, 4);
-        set_F(7, 8, 2, 1, 5);
         print();
-        steepestDescent(0.01, 10);
+        steepestDescent(10);
         std::cout << "After calculation" << std::endl;
         print();
-        print_methodError();
+        print_differences();
+      
     }
     
 
@@ -228,6 +308,9 @@ void print_methodError()
 
 int main()
 {
-    Transmission T;
+    TestPoints t1;
+    Transmission T(t1);
     T.compute();
 }
+
+
